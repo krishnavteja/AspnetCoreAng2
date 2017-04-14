@@ -38,11 +38,12 @@
                 </div>
                 <div class="form-group form-group-condensed col-md-3">
                     <label for="planName">Plan Name:</label><br />
-                    <select class="form-control input-sm widest" id="planName"></select>
+                    <select2 name="planName" class="form-control input-sm widest" id="planName" 
+                             [value]="planSearchCriteria.name" (valueChanged)="planNameChanged($event)" [data]="planNameOptions" [width]="300" [options]="select2Options"></select2>
                 </div>
-                <div class="form-group form-group-condensed col-md-3">
+                <div class="col-md-3">
                     <label for="planValidated">Plan Validated:</label><br />
-                    <input type="checkbox" class="form-control input-sm widest" [(ngModel)]="planSearchCriteria.isPlanValidated" id="planValidated"/>
+                    <input type="checkbox" [(ngModel)]="planSearchCriteria.isPlanValidated" id="planValidated"/>
                 </div>
             </div>
 
@@ -60,27 +61,30 @@
 </div>
 
 
-<p *ngIf="!planSearchResults"><em>Loading...</em></p>
+<p *ngIf="isLoadingResults"><em>Loading...</em></p>
 
-<h2>Search Results</h2>
+<div *ngIf="!isLoadingResults && planSearchResults">
+    <h2>Search Results</h2>
 
-<table class='table' *ngIf="planSearchResults">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>LOB</th>
-            <th>Product Type</th>
-            <th>Opportunity Date</th>
-            <th>Plan Validated</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let planSearchResult of planSearchResults">
-            <td>{{ planSearchResult.name }}</td>
-            <td>{{ planSearchResult.lob }}</td>
-            <td>{{ planSearchResult.productType }}</td>
-            <td>{{ planSearchResult.opportunityDate }}</td>
-            <td>{{ planSearchResult.isPlanValidated }}</td>
-        </tr>
-    </tbody>
-</table>
+    <table class='table' id="searchResultsTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>LOB</th>
+                <th>Product Type</th>
+                <th>Opportunity Date</th>
+                <th>Plan Validated</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let planSearchResult of planSearchResults">
+                <td>{{ planSearchResult.name }}</td>
+                <td>{{ planSearchResult.lob }}</td>
+                <td>{{ planSearchResult.productType }}</td>
+                <td>{{ planSearchResult.opportunityDate | date: 'MM/dd/yyyy' }}</td>
+                <td>{{ planSearchResult.isPlanValidated }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>

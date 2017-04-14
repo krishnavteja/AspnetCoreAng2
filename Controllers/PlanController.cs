@@ -13,7 +13,7 @@ namespace AspnetCoreAng2.Controllers
         [HttpGet("[action]")]
         public IEnumerable<string> PlanNameOptions()
         {
-            return new List<string> { "HMO Plan Name 1", "PPO Plan Name 2", "Small Business Plan Name 3" };
+            return new List<string> { "HMO Plan Name 1", "PPO Plan Name 2", "Small Business Plan Name 3", "Plan Name 4", "PSP Plan Name 5" };
         }
 
         [HttpGet("[action]")]
@@ -30,6 +30,9 @@ namespace AspnetCoreAng2.Controllers
         [HttpPost("[action]")]
         public IEnumerable<PlanSearchResult> PlanSearch([FromBody]PlanSearchCriteria planSearchCriteria)
         {
+            // Just to add some delay
+            System.Threading.Thread.Sleep(2000);
+
             return new List<PlanSearchResult>
             {
                 new PlanSearchResult { Id = 1, IsPlanValidated = true, LOB = "Small Business", Name = "Small Business Plan Name 1", OpportunityDate = new DateTime(2017, 1, 1), ProductType = "HMO"},

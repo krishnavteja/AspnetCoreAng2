@@ -32,6 +32,8 @@ module.exports = (env) => {
                 'es6-promise',
                 'event-source-polyfill',
                 'jquery',
+                'select2',
+                'ng2-select2',
                 'zone.js',
             ]
         },
