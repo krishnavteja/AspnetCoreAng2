@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Select2OptionData } from 'ng2-select2'
+import { PlanSearchResult } from '../../models/interfaces/planSearchResult';
+import { IdNamePair } from '../../models/interfaces/idNamePair';
+import { PlanSearchCriteriaOptions } from '../../models/interfaces/planSearchCriteriaOptions';
+import { PlanSearchCrtieria } from '../../models/planSearchCriteria';
 
 @Component({
     selector: 'plansearch',
@@ -167,35 +171,5 @@ export class PlanSearchComponent implements OnInit {
         return select2Options;
     }
 
-}
-
-class PlanSearchCrtieria {
-    id: number;
-    name: string;
-    lobId: number;
-    year: boolean;
-    productTypeId: number;
-    searchTerm: string;
-    isPlanValidated: boolean;
-}
-
-interface PlanSearchResult {
-    id: number;
-    name: string;
-    lob: string;
-    isPlanValidated: boolean;
-    opportunityDate: Date;
-    productType: string;
-}
-
-interface IdNamePair {
-    id: number;
-    name: string;
-}
-
-interface PlanSearchCriteriaOptions {
-    yearOptions: number[];
-    productTypeOptions: IdNamePair[];
-    lobOptions: IdNamePair[];
 }
 
