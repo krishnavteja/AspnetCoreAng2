@@ -41,32 +41,8 @@ export class PlanSearchComponent implements OnInit {
         console.log('ngOnInit');
 
         this.select2Options = this.getSelect2Options("Enter Plan Name...", true, null, true, null);
-
-        this.http.get('/api/Plan/PlanNameOptions').subscribe(result => {
-            var options = result.json() as string[];
-
-            var tempOptions = [];
-            options.forEach((option, index) => {
-                var tempOption = <Select2OptionData>{};
-                tempOption.id = option; //index.toString();
-                tempOption.text = option;
-
-                tempOptions.push(tempOption);
-            });
-
-            this.planNameOptions = tempOptions;
-
-            this.planSearchCriteria.name = "HMO Plan Name 1";
-            //this.planSearchCriteria.name = "2"; if we need to use ids
-        });
-
-        this.http.get('/api/Plan/PlanSearchCriteriaOptions').subscribe(result => {
-            var options = result.json() as PlanSearchCriteriaOptions;
-
-            this.yearOptions = options.yearOptions;
-            this.productTypeOptions = options.productTypeOptions;
-            this.lobOptions = options.lobOptions;
-        });
+        this.getPlanNameOptions();
+        this.getPlanSearchCriteriaOptions();
     }
 
     public ngAfterViewInit() {
@@ -88,6 +64,7 @@ export class PlanSearchComponent implements OnInit {
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
+        // TODO: Move http calls to service
         this.http.post('/api/Plan/PlanSearch', JSON.stringify(this.planSearchCriteria), { headers: headers })
             .subscribe(result => {
                 this.planSearchResults = result.json() as PlanSearchResult[];
@@ -97,6 +74,38 @@ export class PlanSearchComponent implements OnInit {
                 this.isLoadingResults = false;
             }
         );
+    }
+
+    private getPlanNameOptions() : void {
+        // TODO: Move http calls to service
+        this.http.get('/api/Plan/PlanNameOptions').subscribe(result => {
+            var options = result.json() as string[];
+
+            var tempOptions = [];
+            options.forEach((option, index) => {
+                var tempOption = <Select2OptionData>{};
+                tempOption.id = option; //index.toString();
+                tempOption.text = option;
+
+                tempOptions.push(tempOption);
+            });
+
+            this.planNameOptions = tempOptions;
+
+            this.planSearchCriteria.name = "HMO Plan Name 1";
+            //this.planSearchCriteria.name = "2"; if we need to use ids
+        });
+    }
+
+    private getPlanSearchCriteriaOptions(): void {
+        // TODO: Move http calls to service
+        this.http.get('/api/Plan/PlanSearchCriteriaOptions').subscribe(result => {
+            var options = result.json() as PlanSearchCriteriaOptions;
+
+            this.yearOptions = options.yearOptions;
+            this.productTypeOptions = options.productTypeOptions;
+            this.lobOptions = options.lobOptions;
+        });
     }
 
     private getSelect2Options(placeHolder?: string, allowClear: boolean = false, minLength?: number, isFreeText?: boolean, ajaxUrl?: string) : Select2Options {
