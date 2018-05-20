@@ -1,5 +1,5 @@
 {
-  "name": "Angular2Spa",
+  "name": "AspnetCoreAng2",
   "version": "0.0.0",
   "dependencies": {
     "@angular/common": "2.0.2",
